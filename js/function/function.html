@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>this</title>
+    <script>
+        function f1() {
+            console.log("function f1 this=", this); 
+        }
+
+        let f2 = ()=> console.log("f2 this=", this);
+
+        class C {
+            fn = () => {
+                console.log("Class c this", this);
+            }
+        }
+
+        let c = new C();
+
+        let obj = {
+            name: "罗杰",
+            f1,
+            f2,
+            f3:c.fn,
+        }
+
+        // 箭头函数的 this 不随调用方的变化而发生变化
+        obj.f1() // function f1 this= {name: '罗杰', f1: ƒ, f2: ƒ}
+        obj.f2() // f2 this= Window {window: Window, self: Window, document: document, name: '', location: Location, …}
+        obj.f3() // Class c this C {fn: ƒ}
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
