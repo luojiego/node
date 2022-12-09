@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>try Class</title>
     <script>
+        // 严格模式的优点：
+        // 1. 禁止一些语法
+        // 2. 更容易报错
+        // 3. 提升了性能
+        "use strict";
+        a = 10 // 在严格模式下，此行代码运行会报错
         class Person {
             name="this is Person name";
             static show() {
@@ -17,6 +23,79 @@
         console.log(p)
         console.log(Person.show());
         console.log(Person.className);
+
+        class Dog {
+            #name
+            #age // 私有属性必须先声明
+            constructor(name, age) {
+                this.#name = name;
+                this.#age = age;
+            }
+            show() {
+                console.log(this.#name, this.#age)
+            }
+
+            get name() {
+                return this.#name;
+            }
+
+            // 可以使用 obj.age 直接获得 age 属性
+            get age() {
+                return this.#age;
+            }
+
+            // 可以用 obj.age = 2 // 来直接设置属性
+            set age(age) {
+                this.#age = age;
+            }
+        }
+
+        const d1 = new Dog("小黑", 1);
+        console.log(d1);
+        // 不能再使用 d1.#name 访问，报错：Uncaught SyntaxError: Private field '#name' must be declared in an enclosing class
+        // 但是可以提供 get 和 set 方法
+
+        class Animal {
+            constructor(name) {
+                this.name = name
+            }
+
+            sayHello() {
+                console.log("动物在叫")
+            }
+        }
+
+        class Cat extends Animal {
+            sayHello() {
+                console.log("喵喵喵")
+            }
+        }
+        const cat = new Cat("Tom")
+        console.log(cat)
+        cat.sayHello()
+
+        // 函数里面的代码默认是严格模式
+        class Pig extends Animal {
+            constructor(name, age) {
+                super(name) // super() 必须调用，否则会报错
+                this.age = age
+            }
+
+            sayHello() {
+                super.sayHello() // 重写父类的 sayHello() 函数，可以使用 super.调用父类的属性和方法
+                console.log("哼哼")
+            }
+        }
+        const pig = new Pig("Li")
+        pig.sayHello()
+
+        let fn = ()=>{
+            "use strict";
+            name = "luojie"
+            console.log(name);
+        }
+        fn()
+
     </script>
 </head>
 <body>
