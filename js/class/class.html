@@ -118,6 +118,22 @@
         // 通过对象能访问到的方法，若不在对象自身的存储中，则该方法一定会出现在对象的原型链上
         // 函数能正常访问，它一定在 Window 对象中定义中了
 
+        // 比较旧的类的实现
+        function Book(name, author) {
+            this.name = name;
+            this.author = author;
+            /*不能在构造函数中写此类代码，需要通过原型来操作
+            this.sayHello = function() {
+
+            }*/
+        }
+
+        Book.prototype.sayHello = function() {
+
+        }
+
+        const b = new Book("代码整洁之道", "Martin");
+        console.log(b);
     </script>
 </head>
 <body>
