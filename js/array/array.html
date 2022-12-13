@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array</title>
+    <script>
+        class Person {
+            constructor(name) {
+                this.name = name;
+            }
+        }
+        const arr = [new Person("孙悟空"), new Person("猪八戒")];
+        console.log(arr);
+        const arr2 = arr; // arr2 == arr
+
+        const arr3 = structuredClone(arr); // arr3 != arr && arr3[0] != arr[0]
+
+        const arr4 = arr.slice(); // arr4 != arr && arr4[0] == arr
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
