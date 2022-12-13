@@ -11,7 +11,7 @@
         // 2. 更容易报错
         // 3. 提升了性能
         "use strict";
-        a = 10 // 在严格模式下，此行代码运行会报错
+        // a = 10 // 在严格模式下，此行代码运行会报错
         class Person {
             name="this is Person name";
             static show() {
@@ -96,6 +96,44 @@
         }
         fn()
 
+        console.log(pig.__proto__) // Animal {constructor: ƒ, sayHello: ƒ}
+        console.log(pig.__proto__ == Pig.prototype) // true
+        console.log(pig.__proto__.__proto__) // {constructor: ƒ, sayHello: ƒ}
+        console.log(pig.__proto__.__proto__.__proto__) // {constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, hasOwnProperty: ƒ, __lookupGetter__: ƒ, …}
+        console.log(pig.__proto__.__proto__.__proto__.__proto__) // null
+
+        // 原型链根据类的复杂程序不同而展示不同的结果
+        // console.log(Object.hasOwnProperty(pig, "age"));
+        // 无论属性是在对象中或者原型中，in 都能取到
+        console.log("name" in pig) // true
+        console.log("sayHello" in pig) // true
+
+        // 使用 对象.hasOwnProperty 时，只能获取到对象中存储的属性
+        console.log(pig.hasOwnProperty("name")) // true
+        console.log(pig.hasOwnProperty("sayHello")) // false
+        // 对象.hasOwnProperty 不推荐使用，建议使用 Object.hasOwn
+        console.log(Object.hasOwn(pig, "name")) // true
+        console.log(Object.hasOwn(pig, "sayHello")) // false
+
+        // 通过对象能访问到的方法，若不在对象自身的存储中，则该方法一定会出现在对象的原型链上
+        // 函数能正常访问，它一定在 Window 对象中定义中了
+
+        // 比较旧的类的实现
+        function Book(name, author) {
+            this.name = name;
+            this.author = author;
+            /*不能在构造函数中写此类代码，需要通过原型来操作
+            this.sayHello = function() {
+
+            }*/
+        }
+
+        Book.prototype.sayHello = function() {
+
+        }
+
+        const b = new Book("代码整洁之道", "Martin");
+        console.log(b);
     </script>
 </head>
 <body>
