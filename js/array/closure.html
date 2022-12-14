@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>closure</title>
+    <script>
+        let a = "使用 let 声明的 a";
+        var global = "使用 var 声明的 a"; // 可以使用 global 访问，也可以使用 window.global 来访问
+        function testScope() {
+            funcScope = "函数作用域中声明的变量" // 当 testScope 中声明一个变量后，则在 window 中添加了一个变量 funcScope
+        }
+
+        function t1() {
+            console.log(a); // 打印 "使用 let 声明的 a"
+        }
+
+        function t2() {
+            let a  = "t2 中的 a";
+            return ()=>{console.log(a)} // 当调用 t2()() 时打印 "t2 中的 a"
+        }
+
+        function t3() {
+            let a  = "t3 中的 a";
+            t1() // 不会打印 "t3 中的 a" 因为函数在声明时其作用范围已经确定，称其为记法作用域
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
