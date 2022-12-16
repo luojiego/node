@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Map</title>
+    <script>
+        /*
+            一直以为 JS 中没有 Map 呢，原来是因为自己没有系统的学习。
+        */
+        const m = new Map();
+        m.set("name", "luojie")
+        m.set("age", 33)
+        m.set("address", "西安")
+        // 与 Object 不同，对于 键的选择，几乎没有限制
+        m.set(1, "一")
+        m.set(true, false)
+        m.set(undefined, "未定义")
+        m.set(NaN, "不是数字")
+        m.set({"name":"猪八戒"},"天蓬元帅")
+        console.log(m)
+        m.delete(NaN)
+        console.log(m.size)
+        console.log(m.entries())
+        m.forEach((a,b,c)=>{
+            console.log(a,b)
+        })
+        console.log(m.get(true))
+        for(let k of m.keys()) {
+            console.log(k)
+        }
+
+        for (let v of m.values()) {
+            console.log(v)
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
