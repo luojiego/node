@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let a = 10;
+        let b = 20;
+        [a,b] = [b,a] // 交互 a 和 b，我总担心这样的性能不好
+        console.log(a,b);
+
+        let arr = [1,2,3,4,5,6,7,8,9]
+        let [a1,a2, ...a3] = arr // a1 = arr[0], a2 = arr[1], a3 = arr[2:arr.length]
+        console.log(a1, a2, a3);
+
+        let newArr = [...arr] // 数组展开
+        console.log(newArr)
+
+        const obj = {
+            name: '灿灿',
+            age: 8,
+            school: '紫薇东进小学二(1)班',
+        }
+
+        let {name:name, age:age, school:school} = obj;
+        console.log(name, age, school);
+
+        let newObj = {
+            ...obj,
+            gender: '男'
+        }
+        console.log(newObj)
+
+        let address;
+        const obj1 = obj;
+        ({name:name, age:age, school:school, address:address="Xi'an"} = obj);
+        console.log(name, age, school, address)
+
+        console.log(...newArr)
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
