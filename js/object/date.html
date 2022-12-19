@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let d = new Date();
+        console.log(d);
+        let d1 = new Date(2022,12,18,15,34,55)
+        console.log(d1)
+        console.log(d1.getTime()); // 返回毫秒字符串
+        console.log(d1.toLocaleDateString())
+        console.log(d1.toLocaleTimeString())
+        console.log(d1.toLocaleString('en-US'));
+        console.log(d1.toLocaleString('en-GB'));
+        console.log(d1.toLocaleString('zh-CN'));
+        console.log(d1.toLocaleString('zh-TW'));
+        console.log(d1.toLocaleString('zh-HK'));
+        console.log(d1.toLocaleString('zh-CN',{year:"2-digit", hour12:true, hour:"numeric", timeZoneName: "long"}))
+        let d2 = new Date(1671407509000)
+        console.log(d2)
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
