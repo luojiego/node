@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>包装类</title>
+    <script>
+        // 一个普通类型会调用对应的方法，是将调用者的类型转换成对应的类型进行调用的
+        let num1 = new Number(1);
+        let num2 = new Number(1);
+        console.log(num1, num2);
+        console.log(num1 == num2);
+        console.log(num1.toString());
+
+        let name = '罗明灿';
+        console.log(name[0])
+        // String 跟数组非常的类似，但是由于基本类型都是不可变类型
+        // String 的方法都是非破坏性的方法
+        console.log(name.at(-1))
+        // at 方法跟数组索引类似，但是可以传负值，从倒数来反向取
+
+        // charAt 是比较旧的标准
+        console.log("name.charAt(2):"+ name.charAt(2)+";") // 如果是非常索引，则返回空字符
+
+        let str = 'abcaecafcadc';
+        str.name = '罗杰' // 会先将 str 转换成 Object，给 name 赋值，但是赋值完成了该对象就丢弃了
+        console.log(str.name) // 此处的调用仍然是将 str 转换成临时的 Object，临时的 Object 对象显然是没有 name 属性的，所以此处必然会返回 undefined
+        let reg = /a[a-z]c/g
+        console.log(reg.test(str))
+        let result = reg.exec(str)
+        console.log(result) // 调用一次返回一次的结果
+
+        let reg2 = /a(([a-z])c)/g // 含有模式串的正则表达式
+        do {
+            result = reg2.exec(str)
+            console.log(result)
+        } while (result != null)
+
+        result = str.match(/a([a-z])c/g) // String 的 match 方法会忽略模式
+        console.log(result)
+
+        str = "孙悟空456猪八戒123沙和尚789唐僧"
+        result = str.split(/\d{3}/) // split 中使用正则表达式
+        console.log(result)
+        console.log(str.includes('唐僧'))
+        console.log(str.includes('白骨精'))
+
+        str = '  ae cd  '
+        console.log(str.trim())
+        console.log(str.trimStart())
+        console.log(str.trimEnd())
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
