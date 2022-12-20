@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Node</title>
+</head>
+<body>
+    <span class="s1">我是 span </span>
+    <span class="s1">我是 span </span>
+    <span class="s1">我是 span </span>
+    <span class="s1">我是 span </span>
+    <span class="s1">我是 span </span>
+    <div>我是 Div</div>
+    <div>我是 Div</div>
+    <div>我是 Div</div>
+    <div>我是 Div</div>
+    <div>我是 Div</div>
+    <script>
+        let spans = document.getElementsByClassName("s1");
+        console.log(spans.length);
+        let divs = document.getElementsByTagName("div");
+        console.log(divs.length);
+        // document.getElementsByClassName 和 document.getElementsByTagName
+        // 返回的集合都是可以自动实时更新的，也就是说获取一次，后续添加的元素，也是可以
+        // 体现在查询结果中的
+    </script>
+</body>
+</html>

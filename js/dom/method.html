@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document 属性和方法</title>
+</head>
+<body>
+    <div id="box1">
+        我是 div
+        <span class="s1">我是 span </span>
+        <span class="s1">我是 span </span>
+    </div>
+    <span class="s1">我是 div 的兄弟 span</span>
+    <script>
+        const div = document.getElementById("box1");
+        const spans = div.getElementsByTagName("span");
+        console.log(spans)
+    </script>
+</body>
+</html>
