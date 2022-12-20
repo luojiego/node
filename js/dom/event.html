@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+            width: 200px;
+            height: 200px;
+            border: 10px solid green;
+            background-color:aqua;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>    
+    <script>
+        /*
+        box.onmousemove = function(event) {
+            console.log(event)
+        }*/
+        // 当 style 属性中有 #box 时，此时在 script 标签中是可以直接使用 box 来操作对象的
+        box.addEventListener("mousemove", function(event) {
+            console.log(event.clientX, event.clientY)
+            box.textContent = event.clientX + "," + event.clientY
+        })
+    </script>
+</body>
+</html>
