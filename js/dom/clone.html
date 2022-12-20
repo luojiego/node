@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('btn');        
+            btn.addEventListener('click', function() {
+                const l1 = document.getElementById('l1');
+                const ul2 = document.getElementById('ul2');
+                /* 
+                如果使用以下的方式，l1 就直接变成了 ul2 的子结点
+                这个和我一直以来的想法都是不相同的，如果需要复制，需要 cloneNode
+                ul2.appendChild(l1);
+                */
+                
+                // 参数为 true 表示复制子结，否则不复制子结点
+                let newL1 = l1.cloneNode(true);
+                ul2.appendChild(newL1);
+            })
+        })
+    </script>
+</head>
+<body>
+    <button id="btn">复制</button>
+    <ul id="ul1">
+        <li id="l1">孙悟空</li>
+        <li id="l2">猪八戒</li>
+        <li id="l3">沙和尚</li>
+    </ul>
+
+    <ul id="ul2">
+        <li>蜘蛛精</li>
+    </ul>
+
+</body>
+</html>
