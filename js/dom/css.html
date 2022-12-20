@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box1 {
+            width: 200px;
+            height: 200px;
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+<body>
+    <button id="btn">点我一下</button>
+    <hr>
+    <div class="box1"></div>
+    <script>
+        const btn = document.getElementById("btn");
+        const box1 = document.querySelector(".box1");
+        btn.addEventListener("click", function() {
+            // 将 height 和 weight 均变成两倍
+            // box1.style.width = "400px";
+            // box1.style.height = "400px";
+
+            // console.log(parseInt(box1.style.height) * 2 + "px");
+            // 通过 box1.style 仅能获取到已经添加在元素上的 style 属性
+            const box1Style = getComputedStyle(box1)
+            console.log(box1Style.height)
+            // 不能通过以下的方式来设置属性，因为 box1Style 的属性是只读的
+            // box1Style.width = parseInt(box1Style.width) * 2 + "px";
+
+            box1.style.width = parseInt(box1Style.width) * 2 + "px";
+            box1.style.height = parseInt(box1Style.height) * 2 + "px";
+            // console.log(box1.style.width)
+            // 注意事项：样式对象中返回的样式值，不一定能拿来直接计算
+            //     在使用时，一定要确保值是可以计算的才去计算
+        })
+    </script>
+</body>
+</html>
