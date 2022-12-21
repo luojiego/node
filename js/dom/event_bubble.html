@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件冒泡</title>
+    <style>
+        #box1{
+            width: 300px;
+            height: 300px;
+            background-color: burlywood;
+        }
+        #box2{
+            width: 250px;
+            height: 250px;
+            background-color: antiquewhite;
+        }
+        #box3{
+            width: 200px;
+            height: 200px;
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <div id="box1">
+        <div id="box2">
+            <div id="box3"></div>
+        </div>
+    </div>
+    <a href="https://www.luojiego.com">超链接</a>
+    <script>
+        const box1 = document.getElementById("box1")
+        const box2 = document.getElementById("box2")
+        const box3 = document.getElementById("box3")
+        // box1.addEventListener("click",()=>{alert("box1 被点击了")})
+        box1.addEventListener("click",(event)=>{
+            alert("box1 被点击了")
+            // event.target 表示是谁触发的的事件
+            // 在此案例中，若点击的是 box3，则此处的 target 为 box3
+            // 与 box3 上有没有点击事件是无关的
+            console.log(event.target) 
+            console.log(event.currentTarget) // 表示当前的对象是谁
+            // 在箭头函数中，由于无法正常使用 this，可以用来替代 this 指针
+        })
+        box2.addEventListener("click",()=>{alert("box2 被点击了")})
+        box3.addEventListener("click",(event)=>{
+            alert("box3 被点击了")
+            event.stopPropagation() // 停止事件的传导，则 box2 和 box3 不会再收到点击事件
+        })
+        // 事件会逐层向上冒泡，也即是在 box3 上点击之后，box2 也会收到点击，box1 也会
+
+        const link = document.querySelector("a");
+        /*link.onclick = (event)=>{
+            alert("我被点击了")
+            return false // 可以返回 false 停止默认的行为
+        }*/
+
+        // element.onclick 虽然可以返回 false 来停止默认行为， 但是 使用 addEventListener 时不行
+        link.addEventListener("click", (event)=>{
+            alert("addEventListener: 我被点击了1")
+            // 使用 preventDefault() 是更加通用的行为
+            event.preventDefault(); 
+        })
+        link.addEventListener("click", (event)=>{
+            alert("addEventListener: 我被点击了2")
+            // 使用 preventDefault() 是更加通用的行为
+            event.preventDefault(); 
+        })
+
+        // 使用 addEventListener 是更加通用的处理方式
+
+        
+    </script>
+</body>
+</html>
