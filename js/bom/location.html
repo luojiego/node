@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM-history</title>
+</head>
+<body>
+    <button id="btn">点我点我</button>
+    <input type="text">
+    <div id="box1">
+        <div id="box2">
+            <div id="box3"></div>
+        </div>
+    </div>
+    <script>
+        /*
+            通过 #box1>#box2>#box3 按 table 可直接创建嵌套的 div
+        */
+        /*
+            location 一直以来在幻兽爱合成中使用的挺多的，但是用的不好
+            特别是在要刷新整个页面时，一直使用的是 windows.href 
+            要知道我们的页面都是要重新拼接 url，特别痛苦，最后发现
+            window.reload() 直接解决问题
+        */
+        const btn = document.getElementById("btn");
+        btn.onclick = ()=>{
+            // 通过以下四种方式，都能跳转网页，唯独 replace 不能再返回之前的网页
+            // location = "https://www.luojiego.com"
+            // location.href = "https://www.luojiego.com"
+            // location.assign("https://www.luojiego.com")
+            // location.replace("https://www.luojiego.com")
+            
+            // 刷新当前网页，如果不传参数，则表示不清理缓存
+            // 在 Firefox 浏览器中，在 input 框中输入内容时，刷新时，内容不会消失
+            // 但是在 Chrome 中，会消失，如果希望也在 Firefox 中也消失，需要加上参数：true
+            // location.reload()
+            location.reload(true)
+        }
+    </script>
+</body>
+</html>
