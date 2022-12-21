@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跟随鼠标运行的小球</title>
+    <style>
+        #box1{
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+            border-radius: 50%;
+            position: relative;
+        }
+        #box2{
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+        #box3 {
+            width: 300px;
+            height: 300px;
+            background-color: bisque;
+        }
+        #box4 {
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="box1"></div>
+    <div id="box2"></div>
+    
+    <div id="box3" onclick="alert(3)">
+        <div id="box4" onclick=alert(4)></div>
+    </div>
+    <script>
+        // 事件冒泡和元素的样式无关，只和结构相关
+
+        document.addEventListener("mousemove", (event) => {
+            const box1 = document.getElementById("box1");
+            box1.style.left = event.clientX + "px";
+            box1.style.top = event.clientY + "px";
+        })
+
+        /*
+        如果 box2 停止的事件传导，则会导致鼠标移动到了 box2 的区域之后，小于无法正常移动
+        const box2 = document.getElementById("box2");
+        box2.onmousemove = (event) => {
+            event.stopPropagation()
+        } */
+
+    </script>
+</body>
+</html>
