@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .outer{
+            width: 640px;
+            margin: 50px auto;
+            text-align: center;
+        }
+    </style>
+    <script>
+        window.onload = () => {
+            const imgArr = [
+                "./images/1.png",
+                "./images/2.png",
+                "./images/3.png",
+                "./images/4.png",
+                "./images/5.png",
+            ]
+
+            let index = 0;
+
+            const img = document.getElementsByTagName('img')[0];
+            const prevBtn = document.getElementById('prev')
+            const nextBtn = document.getElementById('next')
+            const autoBtn = document.getElementById('auto')
+            const p = document.getElementsByTagName('p')[0];
+
+            p.textContent = `共${imgArr.length}张图片，当次是第${index+1}张`;
+
+            let ticker;
+            autoBtn.onclick = ()=>{
+                ticker = setInterval(()=>{
+                    // nextBtn.onclick()
+                    if (index == imgArr.length - 1) {
+                        index = 0
+                    } else {
+                        index++
+                    }
+                    img.src = imgArr[index]
+                    p.textContent = `共${imgArr.length}张图片，当次是第${index+1}张`;
+                },3000)
+            }
+
+            prevBtn.onclick = ()=>{
+                clearInterval(ticker) // 点击前一张时停止掉自动定时器
+                if (index==0) {
+                    index = imgArr.length - 1;
+                } else {
+                    index--
+                }
+                img.src = imgArr[index];
+                p.textContent = `共${imgArr.length}张图片，当次是第${index+1}张`;
+            }
+
+            nextBtn.onclick = ()=> {
+                clearInterval(ticker) // 点击下一张时停止掉自动定时器
+                // img.src = "./images/2.png"
+                if (index == imgArr.length - 1) {
+                    index = 0
+                } else {
+                    index++
+                }
+                img.src = imgArr[index]
+                p.textContent = `共${imgArr.length}张图片，当次是第${index+1}张`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="outer">
+        <p>共N张图片，当次是第M张</p>
+        <img src="./images/1.png">
+        <button id="prev">上一张</button> 
+        <button id="auto">自动</button> 
+        <button id="next">下一张</button> 
+    </div>
+</body>
+</html>
