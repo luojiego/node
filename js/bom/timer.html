@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>定时器</title>
+</head>
+<body>
+    <script>
+        /*
+            console.time("test")
+            setTimeout(() => {
+                console.timeEnd("test");
+                alert("timeout")
+            }, 3000);
+
+            setTimeout(() => {
+                console.timeEnd("test");
+                console.log("0ms timeout")
+                
+                console.time("test")
+            },0); // 虽然看似是立即执行的函数，但是因为是在消息队列中
+
+            // 所以此处的 “2222” 永远都比 “0ms timeout 先执行”
+            console.log("2222")
+        */
+
+        // setInterval 的缺陷在于 alert 的执行会导致间隔时间变得非常不稳定
+        //      部分情况下为了确保动画的播放，setInterval 的适用场景非常少
+        // console.time("interval")
+        // setInterval(()=>{
+        //     console.timeEnd("interval")
+        //     alert("interval 3s")
+        //     console.time("interval")
+        // }, 3000)
+
+        // 通过如下的方式，可以最大保证间隔时间是稳定的 3s，与函数中的执行时间无关 
+        // 即使换成 console.log 打印一句话，setInterval 也没有如下的方式更加精准
+        console.time("t")
+        setTimeout(function fn() {
+            console.timeEnd("t")
+            alert("timeout 3s")
+            setTimeout(fn, 3000)
+            console.time("t")
+        }, 3000);
+
+    </script>
+</body>
+</html>

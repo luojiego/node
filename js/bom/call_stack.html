@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>调用栈</title>
+</head>
+<body>
+    <button id="btn01">点我</button>
+    <button id="btn02">点我点我</button>
+    <script>
+        function fn() {
+            function fn2() {
+                console.log("fn2")
+            }
+
+            fn2()
+
+            console.log("fn")
+        }
+
+        fn()
+
+        console.log("script")
+
+        const btn01 = document.getElementById("btn01");
+        const btn02 = document.getElementById("btn02");
+
+        // 回调函数都会被放到消息队列中执行
+        // 当消息队列中有消息时，或者栈中调用执行较慢时，则会感觉到明显的延迟
+        btn01.onclick = ()=>{
+            alert(111)
+            const begin = Date.now();
+            while(Date.now() - begin < 3000) {
+
+            }
+        }
+
+        btn02.onclick = ()=>{
+            alert(222)
+        }
+    </script>
+</body>
+</html>
