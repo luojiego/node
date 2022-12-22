@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>轮播图增加按钮</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        img{
+            vertical-align: top;
+        }
+
+        .outer{
+            width: 640px;
+            height: 390px;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        ul{
+            list-style: none;
+        }
+
+        .image-list {
+            height: 390px;
+        }
+
+        .image-list li {
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        li.current{
+            z-index: 1;
+            opacity: 1;
+        }
+
+        .prev-next a{
+            font-size: 60px;
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            position: absolute;
+            height: 60px;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            z-index: 2;
+            opacity: 0.5;
+        }
+
+        .prev-next a:hover {
+            opacity: 1;
+        }
+
+        #next {
+            right: 0;
+        }
+
+        /*
+            设置导航点的样式
+        */
+        .dot {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            z-index: 3;
+            left: 0;
+            right: 0;
+            bottom: 5px;
+            margin: auto;
+        }
+        .dot a{
+            width: 20px;
+            height: 20px;
+            margin: 5px;
+            border-radius: 50%;
+            background-color: #fff;
+            opacity: 0.5;
+        }
+
+        .dot .active, 
+        .dot a:hover{
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <ul class="image-list">
+            <li class="current" ><a href="#"><img src="./images/1.png"></a></li>
+            <li><a href="#"><img src="./images/2.png"></a></li>
+            <li><a href="#"><img src="./images/3.png"></a></li>
+            <li><a href="#"><img src="./images/4.png"></a></li>
+            <li><a href="#"><img src="./images/5.png"></a></li>
+        </ul>
+        <div class="prev-next">
+            <a id="prev" href="javascript:;"> < </a>
+            <a id="next" href="javascript:;"> > </a>
+        </div>
+        <div class="dot">
+            <a class="active" href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+        </div>
+    </div>
+    <script>
+        const prev = document.querySelector("#prev")
+        const next = document.querySelector("#next")
+
+        prev.onclick = () => changeImage("prev")
+        next.onclick = () => changeImage("next")
+
+        const outer = document.querySelector(".outer")
+        outer.onmouseenter = () => toggleChange()
+        outer.onmouseleave = () => toggleChange()
+
+        const dots = Array.from(document.querySelectorAll(".dot a"))
+        const images = Array.from(document.querySelectorAll(".image-list li"))
+
+        document.addEventListener("click", (event)=>{
+            const index = dots.indexOf(event.target)
+            if (index != -1) {
+                // const currentDot = document.querySelector(".dot .active")
+                // currentDot.classList.remove("active")
+                // dots[index].classList.add("active")
+
+                // const currentImage = document.querySelector(".image-list .current")
+                // currentImage.classList.remove("current")
+                // images[index].classList.add("current")
+                changeImage(index)
+            }
+        })
+
+        function changeImage(dir) {
+            const current = document.querySelector('.current');
+            let next;
+            if (dir == "prev") {
+                next = current.previousElementSibling || document.querySelector("li:last-child");
+            } else if (dir == "next") {
+                next = current.nextElementSibling || current.parentElement.firstElementChild
+            } else if (typeof dir == "number") {
+                next = images[dir]
+            }
+            current.classList.remove("current")
+            next.classList.add('current')
+
+            const index = images.indexOf(next)
+            const currentDot = document.querySelector(".dot .active")
+            currentDot.classList.remove("active")
+            dots[index].classList.add("active")
+        }
+
+        const toggleChange = (function() {
+            let timer = null;
+
+            return ()=>{
+                if (timer === null) {
+                    console.log("timer === null")
+                    timer = setTimeout(function auto(){
+                        changeImage("next")
+                        timer = setTimeout(auto, 2000)
+                    }, 2000)
+                } else {
+                    console.log("timer !== null")
+                    // 停止掉定时器
+                    clearTimeout(timer)
+                    timer = null
+                }
+            }
+        })()
+
+        toggleChange()
+    </script>
+</body>
+</html>
