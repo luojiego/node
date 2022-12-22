@@ -32,7 +32,7 @@
         #snake > div {
             width: 10px;
             height: 10px;
-            background-color: #000;
+            background-color: blue;
             position: absolute;
             border: 1px solid #b7d4a8;
         }
@@ -50,7 +50,7 @@
         #food > div {
             width: 5px;
             height: 5px;
-            background-color: #000;
+            background-color: #f00;
             transform: rotate(45deg);
         }
 
@@ -91,9 +91,11 @@
         // const head = snakes[0]
         let dir;
         let score = 0;
+        let level = 0;
         let timer = null; // 定时器
         let step = 10; // 每次加 10 分
         let interval = 200; // 定时器间隔
+        let keyActive = true; // 按键激活
 
         // 游戏开始
         function startGame() {
@@ -105,15 +107,19 @@
             timer = null
             dir = null
             score = 0
-            updateScore() // 设置 score 为 0
+            level = 0
             randomFood()
             resetSnake()
+            scoreSpan.textContent = score
+            levelSpan.textContent = level + 1
         }
 
         // 重置蛇的数据
         function resetSnake() {
+            // let length = snakes.length
             // 删除蛇多余的部分
-            for (let i = 1; i < snakes.length; i++) {
+            for (let i = snakes.length-1; i > 0; i--) {
+                // console.log(snakes[i])
                 snakes[i].remove()
             }
             snakes[0].style.top = "0px"
@@ -121,13 +127,12 @@
         }
 
         document.addEventListener("keydown", (event)=>{
-            // TODO 未处理一个时间周期按键两次的问题
             console.log(event.key)
             if (timer === null) {
                 startGame()
             }
 
-            if (dirArr.includes(event.key)) {
+            if (keyActive && dirArr.includes(event.key)) {
                 if (snakes.length > 1) {
                     // 禁止掉头
                     switch(event.key) {
@@ -154,14 +159,34 @@
                     }
                 }
                 dir = event.key
+                keyActive = false // 按键之后，禁止按键
             }
         })
 
         const food = document.getElementById("food")
         // 随机食物位置
         function randomFood() {
-            let x = Math.floor(Math.random() * 30) * 10
-            let y = Math.floor(Math.random() * 30) * 10
+            let x;
+            let y;
+            let loop;
+            do {
+                // loop = undefined
+                x = Math.floor(Math.random() * 30) * 10
+                y = Math.floor(Math.random() * 30) * 10
+                let i = 0;
+                for (;i<snakes.length; i++) {
+                    // 如果跟任一蛇的身体重合，则需要重新随机，退出该循环
+                    if (x == snakes[i].offsetLeft && y == snakes[i].offsetTop) {
+                        break
+                    }
+                }
+                // 如果遍历到了蛇的所有部分，则说明不需要重新随机
+                if (i === snakes.length) {
+                    break
+                }
+                alert(`重新随机${x},${y}, ${i}`)
+            } while(true)
+
             food.style.top = x + "px"
             food.style.left = y + "px"
         }
@@ -186,11 +211,20 @@
             if (head.style.top == food.style.top && 
                 head.style.left == food.style.left) {
 
-                // randomFood();
+                randomFood();
+
+                /*
+                for (let i = 0; i<50; i++) {
+                    // 增加蛇的长度
+                    snake.insertAdjacentHTML("beforeend", "<div/>")
+                }*/
 
                 // 增加蛇的长度
                 snake.insertAdjacentHTML("beforeend", "<div/>")
+
+                // 增加分数
                 score += step
+
                 updateScore()
             }
 
@@ -204,10 +238,14 @@
         }
 
         const scoreSpan = document.getElementById("score")
+        const levelSpan = document.getElementById("level")
 
         function updateScore() {
-            // score.textContext = score
             scoreSpan.textContent = score
+            if (score % 50 == 0) {
+                level += 1;
+                levelSpan.textContent = level + 1;
+            }
         }
 
         function gameOver() {
@@ -220,6 +258,7 @@
         randomFood()
         
         function move() {
+            keyActive = true
             const head = snakes[0];
             let x = head.offsetLeft;
             let y = head.offsetTop;
@@ -240,7 +279,7 @@
             }
 
             if (update(head, x, y)){
-                timer = setTimeout(move, interval)
+                timer = setTimeout(move, interval - level*20)
             }
         }
     </script>
