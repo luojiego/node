@@ -18,6 +18,7 @@
             border: 10px #000 solid;
             border-radius: 20px;
             margin: 50px auto;
+            background-color: #b7d4a8;
         }
 
         #stage{
@@ -33,6 +34,7 @@
             height: 10px;
             background-color: #000;
             position: absolute;
+            border: 1px solid #b7d4a8;
         }
 
         #food {
@@ -75,9 +77,172 @@
             </div>
         </div>
         <div id="info">
-            <div>SCORE: <span id="score">100</span></div>
+            <div>SCORE: <span id="score">0</span></div>
             <div>LEVEL: <span id="level">1</span></div>
         </div>
     </div>
+    <script>
+        const dirArr = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]
+        // 获取蛇的容器
+        const snake = document.getElementById("snake")
+        // 获取蛇的各个部分
+        const snakes = snake.getElementsByTagName("div")
+        // 蛇的头部
+        // const head = snakes[0]
+        let dir;
+        let score = 0;
+        let timer = null; // 定时器
+        let step = 10; // 每次加 10 分
+        let interval = 200; // 定时器间隔
+
+        // 游戏开始
+        function startGame() {
+            timer = setTimeout(move, interval)
+        }
+
+        // 重置游戏
+        function resetGame() {
+            timer = null
+            dir = null
+            score = 0
+            updateScore() // 设置 score 为 0
+            randomFood()
+            resetSnake()
+        }
+
+        // 重置蛇的数据
+        function resetSnake() {
+            // 删除蛇多余的部分
+            for (let i = 1; i < snakes.length; i++) {
+                snakes[i].remove()
+            }
+            snakes[0].style.top = "0px"
+            snakes[0].style.left = "0px"
+        }
+
+        document.addEventListener("keydown", (event)=>{
+            // TODO 未处理一个时间周期按键两次的问题
+            console.log(event.key)
+            if (timer === null) {
+                startGame()
+            }
+
+            if (dirArr.includes(event.key)) {
+                if (snakes.length > 1) {
+                    // 禁止掉头
+                    switch(event.key) {
+                        case "ArrowUp":
+                            if (dir === "ArrowDown"){
+                                return
+                            }
+                            break
+                        case "ArrowDown":
+                            if (dir === "ArrowUp"){
+                                return
+                            }
+                            break
+                        case "ArrowLeft":
+                            if (dir === "ArrowRight"){
+                                return
+                            }
+                            break
+                        case "ArrowRight":
+                            if (dir === "ArrowLeft"){
+                                return
+                            }
+                            break
+                    }
+                }
+                dir = event.key
+            }
+        })
+
+        const food = document.getElementById("food")
+        // 随机食物位置
+        function randomFood() {
+            let x = Math.floor(Math.random() * 30) * 10
+            let y = Math.floor(Math.random() * 30) * 10
+            food.style.top = x + "px"
+            food.style.left = y + "px"
+        }
+
+        // 检测蛇是否吃到了食物
+        function update(head, x, y) {
+            // 游戏结束
+            if (x < 0 || y < 0 || x > 290 || y > 290) {
+                gameOver();
+                return false
+            }
+
+            for (let i = 0; i < snakes.length - 1; i++) {
+                if (snakes[i].offsetLeft === x && snakes[i].offsetTop === y) {
+                    gameOver();
+                    return false
+                }
+            }
+
+            // console.log(x, y)
+            // 如果吃到了食物，则随机新的食物位置
+            if (head.style.top == food.style.top && 
+                head.style.left == food.style.left) {
+
+                // randomFood();
+
+                // 增加蛇的长度
+                snake.insertAdjacentHTML("beforeend", "<div/>")
+                score += step
+                updateScore()
+            }
+
+            // 变更蛇的形态
+            // 此处的处理比较巧妙，每次的变更，其实只用将尾巴换到新的头的位置
+            const tail = snakes[snakes.length - 1]
+            tail.style.left = x + "px"
+            tail.style.top = y + "px"
+            snake.insertAdjacentElement("afterbegin", tail)
+            return true
+        }
+
+        const scoreSpan = document.getElementById("score")
+
+        function updateScore() {
+            // score.textContext = score
+            scoreSpan.textContent = score
+        }
+
+        function gameOver() {
+            alert(`GAME OVER, TOTAL SCORE: ${score}`)
+            clearTimeout(timer)
+            timer = null
+            resetGame()
+        }
+
+        randomFood()
+        
+        function move() {
+            const head = snakes[0];
+            let x = head.offsetLeft;
+            let y = head.offsetTop;
+            // console.log(x, y)
+            switch(dir){
+                case "ArrowUp":
+                    y -= 10;
+                    break
+                case "ArrowDown":
+                    y += 10;
+                    break
+                case "ArrowLeft":
+                    x -= 10;
+                    break
+                case "ArrowRight":
+                    x += 10;
+                    break
+            }
+
+            if (update(head, x, y)){
+                timer = setTimeout(move, interval)
+            }
+        }
+    </script>
 </body>
 </html>
