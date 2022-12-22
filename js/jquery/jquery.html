@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery核心函数</title>
+    <script src="./static/jquery-3.6.3.js"></script>
+</head>
+<body>
+    <button id="btn">点我一下</button>
+    <div id="box1">
+        <ul>
+            <li>孙悟空</li>
+            <li>猪八戒</li>
+            <li>沙和尚</li>
+            <li>唐僧</li>
+        </ul>
+    </div>
+    <script>
+        console.log($) // 能打印出东西，则说明 jQuery 导入成功
+        console.log(jQuery) // 跟 $ 打印的结果一模一样
+        console.log($ === jQuery) // true
+        /*
+            通过 jQuery 获取到的对象是 jQuery 对象，并不是原生对象
+            一定要用原生对象调用原生对象的方法，jQuery 对象调用 jQuery 对象的方法
+        */
+        console.log($("li").text()) // 孙悟空猪八戒沙和尚唐僧
+        $("#btn").click(function() {
+            // jQuery 对象操作返回的结果还是 jQuery 对象，所以可以进行链式调用
+            $("li").text("新的名称").css("color", "red")
+        })
+
+        console.log($("li")) // jQuery.fn.init(4) [li, li, li, li, prevObject: jQuery.fn.init(1)]
+        alert($("li")[0]) // [object HTMLLIElement] 注意，通过数组索引到的元素不再是 jQuery 对象，而是 DOM 原生对象
+
+        var btn = document.getElementById("btn"); // DOM 原生对象
+        var $btn = $(btn); // 将普通的 DOM 对象转换成 jQuery 对象
+        alert($btn) // [object Object]
+
+    </script>
+</body>
+</html>
