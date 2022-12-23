@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clone</title>
+    <script src="./static/jquery-3.6.3.js"></script>
+    <script>
+
+        $(function(){
+            $('#list li:nth-child(1)').click(function() {
+                alert($(this).text())
+            })
+
+            // var $first = $("#list li:nth-child(1)") // nth-child 的索引要从 1 开始
+            // var $first = $("#list li:nth-child(1)").clone() // 这样孙悟空就会得到到下面的的 ul 中
+            var $first = $("#list li:nth-child(1)").clone(true) // 这样孙悟空的其他数据(例如点击事件)也会拷贝走
+            var $list2 = $("#list2")
+            $("#btn").click(function(){
+                $list2.append($first)
+                $("#list li").odd().css("background-color", "red")
+                $("#list2 li").odd().css("color", "red")
+            })
+
+        })
+    </script>
+</head>
+<body>
+    <button id="btn">点我</button>
+    <hr>
+    <div>
+        <ul id="list">
+            <li>孙悟空</li>
+            <li>猪八戒</li>
+        </ul>
+    </div>
+    <hr>
+    <div>
+        <ul id="list2">
+            <li>沙和尚</li>
+            <li>唐僧</li>
+        </ul>
+    </div>
+</body>
+</html>

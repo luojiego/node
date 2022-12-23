@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./static/jquery-3.6.3.js"></script>
+    <title>通过 jQuery 操作 CSS</title>
+    <style>
+        .box1{
+            width: 200px;
+            height: 200px;
+            background-color: skyblue;
+        }
+        .box2{
+            border: 5px rebeccapurple solid;
+        }
+        .box3{
+            background-color:royalblue ;
+        }
+    </style>
+    <script>
+        // 使用 jQuery 主要是为了兼容旧的浏览器标准
+        // 所以在使用时，尽量使用旧的语法，例如尽量用 var 
+        // 函数定义最好不用箭头函数
+
+        $(function(){
+            $("#btn").click(function(){
+                $(".box1").addClass(function(index){
+                    // 给用 .box1 取出来的元素中偶数添加 box2 属性
+                    if (index % 2 == 0) {
+                        return "box2"
+                    }
+
+                    // 给用 .box1 取出来的元素中奇数添加 box3 属性
+                    return "box3"
+
+                    // addClass 回调函数中的返回值，即给所遍历元素添加对应类
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <button id="btn">点我</button>
+    <div class="box1"></div>
+    <div class="box1"></div>
+    <div class="box1"></div>
+</body>
+</html>
